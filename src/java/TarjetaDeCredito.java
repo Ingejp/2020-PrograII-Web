@@ -4,7 +4,7 @@ public class TarjetaDeCredito extends TarjetaBancaria {
     private double limiteDeCredito;
     private double saldo;
     
-    public TarjetaDeCredito(){
+    public TarjetaDeCredito(){//constructor
         this.setLimiteDeCredito();
     }
 
@@ -17,6 +17,7 @@ public class TarjetaDeCredito extends TarjetaBancaria {
         this.limiteDeCredito = 10000;
         this.setSaldo(10000);
     }
+    
 
     public double getSaldo() {
         return saldo;

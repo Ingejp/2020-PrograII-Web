@@ -39,9 +39,9 @@ public class NewServlet extends HttpServlet {
             out.println("<title>Servlet NewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Bienvenido " + tarjeta.getNombreDeTarjeta() + 
-                    " su tarjeta es " + tarjeta.getNumeroDeTarjeta() +
-                     " su saldo es " + tarjeta.getSaldo() +"</h1>");
+            out.println("<h1>Bienvenido " + tarjeta.getNombreDeTarjeta() + "<br>"+
+                    " Su tarjeta es: " + tarjeta.getNumeroDeTarjeta() + "<br>"+
+                     " Su saldo es Q: " + tarjeta.getSaldo() +"</h1>");
             out.println("</body>");
             out.println("</html>");
         }

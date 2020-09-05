@@ -27,9 +27,18 @@ public abstract class TarjetaBancaria {
     public String getNombreDeTarjeta() {
         return nombreDeTarjeta;
     }
+    
+    public boolean ifExist(){
+        //consultar a la base de datos
+        return true;
+    }
 
     public void setNombreDeTarjeta(String nombreDeTarjeta) {
-        this.nombreDeTarjeta = nombreDeTarjeta;
+       if(!this.ifExist()){
+           this.nombreDeTarjeta = nombreDeTarjeta;
+       }else{
+           this.nombreDeTarjeta="";
+       }    
     }
 
     public String getNumeroDeTarjeta() {
