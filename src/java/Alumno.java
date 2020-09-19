@@ -11,7 +11,7 @@ public class Alumno {
     private PreparedStatement prstmt = null;
     private ResultSet result = null;
     
-    public Alumno(){
+    public Alumno(){//constructor
         conn= new ConexionBaseDeDatos();
         cn=conn.conectar();
     }
@@ -39,11 +39,14 @@ public class Alumno {
             }else{
                 salida.append(error);
             }
-        }
-    
+        }    
     }
     
-    public void consultarRegistros(StringBuffer respuesta){   
+    public void consultarRegistros(StringBuffer respuesta){  
+        //base de datos: universidad
+        //tabla: alumno   
+        
+        //String sql="select * from alumno"; ORACLE
         String sql="select * from universidad.alumno";
         
         try{
@@ -56,7 +59,9 @@ public class Alumno {
                 respuesta.append("<td >").append(result.getString("numero_carne")).append("</td>");
                 respuesta.append("<td >").append(result.getString("nombre")).append("</td>");
                 respuesta.append("<td>").append(result.getString("apellido")).append("</td>");
-                respuesta.append("<td>").append(result.getString("correo")).append("</td>");   
+                respuesta.append("<td>").append(result.getString("correo")).append("</td>");
+                respuesta.append("<td id=\"").append(result.getString("numero_carne")).append("ondblclick=\"edit(this.id);\">").append("<a class=btn btn-outline-danger role=button> Eliminar</a> </td>");
+                respuesta.append("<td><button type=\"button\" id=\"btnEditar\" class=\"btn btn-warning\" > Editar </button> ");
                 respuesta.append("</tr>");
                 }
             }else{

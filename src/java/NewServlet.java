@@ -25,23 +25,25 @@ public class NewServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         //String nombreDeTarjeta = request.getParameter("nombre");
-        //int numeroDeTarjeta = Integer.parseInt(request.getParameter("numero"));
-        
-        TarjetaDeCredito tarjeta = new TarjetaDeCredito();    
-        tarjeta.setNombreDeTarjeta(request.getParameter("nombre"));
+        //int numeroDeTarjeta = Integer.parseInt(request.getParameter("numero"));        
+        //TarjetaDeCredito tarjeta = new TarjetaDeCredito();    
+        //tarjeta.setNombreDeTarjeta(request.getParameter("nombre"));
         //tarjeta.setNumeroDeTarjeta(request.getParameter("numero"));
         
+        String carne = request.getParameter("carne");
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String correo = request.getParameter("correo");
+        String genero = request.getParameter("genero");
         
         StringBuffer res = new StringBuffer();
         Writer ajaxSalida =  response.getWriter(); 
         
-        Alumno alumno = new Alumno();
-        //alumno.insert("012342", "BILL", "GATES", "BGATES@MICROSOFT.COM", "1", res);
-        alumno.consultarRegistros(res);
-        
+        Alumno alumno = new Alumno();    
         
         try(PrintWriter out = response.getWriter()) {
-            response.getWriter().println(res);
+          alumno.insert(carne, nombre, apellido, correo, genero, res);
+          alumno.consultarRegistros(res);  // CONSULTAMOS
           ajaxSalida.write(res.toString());
           ajaxSalida.flush();
           ajaxSalida.close();
