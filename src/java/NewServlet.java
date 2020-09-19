@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ public class NewServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -30,20 +32,19 @@ public class NewServlet extends HttpServlet {
         //tarjeta.setNumeroDeTarjeta(request.getParameter("numero"));
         
         
+        StringBuffer res = new StringBuffer();
+        Writer ajaxSalida =  response.getWriter(); 
         
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Bienvenido " + tarjeta.getNombreDeTarjeta() + "<br>"+
-                    " Su tarjeta es: " + tarjeta.getNumeroDeTarjeta() + "<br>"+
-                     " Su saldo es Q: " + tarjeta.getSaldo() +"</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        Alumno alumno = new Alumno();
+        //alumno.insert("012342", "BILL", "GATES", "BGATES@MICROSOFT.COM", "1", res);
+        alumno.consultarRegistros(res);
+        
+        
+        try(PrintWriter out = response.getWriter()) {
+            response.getWriter().println(res);
+          ajaxSalida.write(res.toString());
+          ajaxSalida.flush();
+          ajaxSalida.close();
         }
     }
 

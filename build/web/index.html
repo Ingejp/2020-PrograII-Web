@@ -16,6 +16,10 @@
                     guardarTarjeta();
                 }) 
                 
+                $("#btnConsultar").click(function(){
+                    mostrar();  
+                })
+                
                 function guardarTarjeta(){
                     $.ajax({
                         url:"NewServlet",
@@ -28,6 +32,21 @@
                             //$("#msjExito").css("display","block");
                         }
                     })                    
+                }
+                
+                function mostrar(){
+                    $.ajax({
+                         url:"NewServlet",
+                         dataType:"html",
+                         data:"control=MOSTRAR",
+                         method: "POST",
+                         success:function(respuesta){
+                             $("#tabla").html(respuesta);
+                         },
+                         error:function(objAjax, estado, excepcion){
+                             alert("Error al mostrar registros");
+                         }
+                    })
                 }
             })
         </script>
@@ -82,7 +101,22 @@
                 </div>
                 <input type="button" value="Guardar con jQuery" id="btnGuardar" class="btn btn-primary" >           
                 <input type="submit" value="Crear" class="btn btn-success">
+                 <input type="button" value="Consultar" id="btnConsultar" class="btn btn-success">
              </form>
+            
+            <table class="table table-hover mt-5">
+               <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+                <tbody id="tabla">
+
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
