@@ -12,11 +12,51 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>      
         
         <script>
-
+            function edit(numero_carne){
+                    alert(numero_carne);
+                }
             $(document).ready(function(){
-           
+          
+                mostrar(); 
                 
+                $("#btnGuardar");//seleccionando el boton guardar a través de selectores
+               
+                $("#btnGuardar").click(function(){                    
+                    guardarTarjeta();
+                }) 
                 
+                $("#btnConsultar").click(function(){
+                    mostrar();  
+                })
+                
+                                
+                $("#search").keypress(function(e) {
+                    var code = (e.keyCode ? e.keyCode : e.which);
+                    if(code==13){
+                        mostrar();
+                    }
+                });
+                
+                function mostrar(){
+                    var cajaBusqueda = $("#search").val()
+                    var datoParaBuscar  = ""
+                    if (cajaBusqueda.length>0){
+                       datoParaBuscar=cajaBusqueda;
+                    }
+                    
+                    $.ajax({
+                         url:"NewServlet",
+                         dataType:"html",
+                         data:"control=MOSTRAR&datoParaBuscar="+datoParaBuscar,
+                         method: "POST",
+                         success:function(respuesta){
+                             $("#tabla").html(respuesta);
+                         },
+                         error:function(objAjax, estado, excepcion){
+                             alert("Error al mostrar registros");
+                         }
+                    })
+                }                            
             })
         </script>
     </head>
@@ -30,14 +70,14 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">PrograII APP <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="index.html">PrograII APP <span class="sr-only">(current)</span></a>
                 </li>
                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Catálogos
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                       <a class="dropdown-item" href="AlumnoIndex.html">Alumnos</a>
+                      <a class="dropdown-item" href="AlumnoIndex.html">Alumnos</a>
                       <a class="dropdown-item" href="#">Genero</a>
                       <a class="dropdown-item" href="#">Cursos</a>
                     </div>
@@ -62,10 +102,37 @@
       
         
         <div class="container-md" style="min-height: 900px;">       
-            <h1 class="mt-5 mb-5"> Index PrograII APP </h1>          
-           
-      
+            <h1 class="mt-5 mb-5"> Registro de Alumnos </h1>          
+              
+            <div class="container">
+            <div class="row">
+              <div class="col">
+                  <input class="form-control mr-2 w-100" type="search" id="search" placeholder="Search" aria-label="Search">
+              </div>
+              <div class="col-md-auto">
+                <button class="btn btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search">  </i> </button>
+              </div>
+                <div class="col-md-auto ">
+               <a href="AlumnoCreate.html" class="btn btn-success mr-0" > <i class="fas fa-plus">  </i> Registrar Nuevo </a>
+              </div>
+            </div>
+          </div>
 
+            <table class="table table-hover mt-5 " >
+                <thead class="overflow-auto" >
+                <tr>
+                  <th scope="col">CARNÉ</th>
+                  <th scope="col">NOMBRE</th>
+                  <th scope="col">APELLIDO</th>
+                  <th scope="col">CORREO</th>
+                   <th scope="col">GENERO</th>
+                  <th scope="col">OPCION</th>
+                </tr>
+              </thead>
+                <tbody id="tabla">
+
+                </tbody>
+            </table>
         </div>
         
         <footer style="background: background;">

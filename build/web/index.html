@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>PROGRAII APP</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -12,68 +12,9 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>      
         
         <script>
-            function edit(numero_carne){
-                    alert(numero_carne);
-                }
+
             $(document).ready(function(){
-                listarGenero();
-                function edit(numero_carne){
-                    alert(numero_carne);
-                }
-                
-                $("#btnGuardar");//seleccionando el boton guardar a través de selectores
-               
-                $("#btnGuardar").click(function(){                    
-                    guardarTarjeta();
-                }) 
-                
-                $("#btnConsultar").click(function(){
-                    mostrar();  
-                })
-                
-                function guardarTarjeta(){
-                    $.ajax({
-                        url:"NewServlet",
-                        dataType:"html",
-                        data: $("#formularioTarjeta").serialize(),
-                        method: "POST",
-                        success:function(respuestaDelServidor){
-                            $("#msjExito").show();
-                            $("#msjExito").hide(3000);
-                            //$("#msjExito").css("display","block");
-                        }
-                    })                    
-                }
-                
-                function mostrar(){
-                    $.ajax({
-                         url:"NewServlet",
-                         dataType:"html",
-                         data:"control=MOSTRAR",
-                         method: "POST",
-                         success:function(respuesta){
-                             $("#tabla").html(respuesta);
-                         },
-                         error:function(objAjax, estado, excepcion){
-                             alert("Error al mostrar registros");
-                         }
-                    })
-                }
-                
-                function listarGenero(){
-                    $.ajax({
-                         url:"GeneroController",
-                         dataType:"html",
-                         data:"control=LISTAR",
-                         method: "POST",
-                         success:function(respuesta){
-                             $("#genero").html(respuesta);
-                         },
-                         error:function(objAjax, estado, excepcion){
-                             alert("Error al mostrar registros");
-                         }
-                    })
-                }
+           
                 
                 
             })
@@ -81,7 +22,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-home"></i></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -89,22 +30,25 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="#">PrograII APP <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Catálogos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                       <a class="dropdown-item" href="AlumnoIndex.html">Alumnos</a>
+                      <a class="dropdown-item" href="#">Genero</a>
+                      <a class="dropdown-item" href="#">Cursos</a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown link
+                      Incripciones
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      <a class="dropdown-item" href="#">Registro de Inscrpciones</a>
+                      <a class="dropdown-item" href="#">Reporte de Inscripciones</a>
                     </div>
                 </li>
               </ul>
@@ -118,56 +62,10 @@
       
         
         <div class="container-md" style="min-height: 900px;">       
-            <h1 class="mt-5 mb-5"> Registro de tarjetas Bancarias </h1>          
-              <div class="alert alert-success" role="alert" style="display: none;" id="msjExito" >
-                Tarjeta agregada exitosamente!
-              </div>
-            <form action="NewServlet" method="POST" id="formularioTarjeta" >
-                <div class="form-group">
-                  <label for="formGroupExampleInput">CODIGO ALUMNO</label>
-                  <input type="text" class="form-control" id="carne"  name="carne" placeholder="#de carné" required>
-                   <label for="formGroupExampleInput">NOMBRE</label>
-                  <input type="text" class="form-control" id="nombre"  name="nombre" placeholder="nombre alumno" required>
-                   <label for="formGroupExampleInput">APELLIDO</label>
-                  <input type="text" class="form-control" id="apellido"  name="apellido" placeholder="apellido alumno" required>
-                   <label for="formGroupExampleInput">CORREO</label>
-                  <input type="text" class="form-control" id="correo"  name="correo" placeholder="correo" required>
-                  
-                  
-                  <div class="input-group mb-3 mt-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                    </div>
-                      <select class="custom-select" id="genero" name="genero">
-                        
-                    </select>
-                  </div>
-                  
-                </div>
-                <button type="button" id="btnGuardar" class="btn btn-primary" > <i class="fas fa-save">  </i> Guardar</button>      
-                <input type="submit" value="Crear" class="btn btn-success">
-                <button type="button" value="Consultar" id="btnConsultar" class="btn btn-success"> 
-                    <i class="fas fa-search"></i>
-                    Consultar
-                    </button>
-                 
-             </form>
-            
-            <table class="table table-hover mt-5">
-               <thead>
-                <tr>
-                  <th scope="col">CARNÉ</th>
-                  <th scope="col">NOMBRE</th>
-                  <th scope="col">APELLIDO</th>
-                  <th scope="col">CORREO</th>
-                   <th scope="col">GENERO</th>
-                  <th scope="col">OPCION</th>
-                </tr>
-              </thead>
-                <tbody id="tabla">
+            <h1 class="mt-5 mb-5"> Index PrograII APP </h1>          
+           
+      
 
-                </tbody>
-            </table>
         </div>
         
         <footer style="background: background;">

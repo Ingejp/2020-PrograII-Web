@@ -1,6 +1,7 @@
 package paquete;
 
 
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,13 +45,18 @@ public class Alumno {
         }    
     }
     
-    public void consultarRegistros(StringBuffer respuesta){  
+    public void consultarRegistros(StringBuffer respuesta, String datoParaBuscar){  
         //base de datos: universidad
-        //tabla: alumno   
-        
+        //tabla: alumno           
         //String sql="select * from alumno"; ORACLE
-        String sql="SELECT * FROM universidad.alumno, universidad.genero WHERE alumno.genero_idgenero=genero.idgenero";
         
+        String sql;
+        if(datoParaBuscar.length()>0){
+             sql="SELECT * FROM universidad.alumno, universidad.genero WHERE alumno.genero_idgenero=genero.idgenero AND alumno.nombre LIKE '%"+ datoParaBuscar +"%'";
+        }else{
+             sql="SELECT * FROM universidad.alumno, universidad.genero WHERE alumno.genero_idgenero=genero.idgenero";
+        }
+        out.println(sql);
         try{
         prstmt = cn.prepareStatement(sql);                        
         result = prstmt.executeQuery();    
@@ -63,6 +69,7 @@ public class Alumno {
                 respuesta.append("<td>").append(result.getString("apellido")).append("</td>");
                 respuesta.append("<td>").append(result.getString("correo")).append("</td>");
                 respuesta.append("<td>").append(result.getString("descripcion")).append("</td>");
+               
                 respuesta.append("<td id=\"").append(result.getString("numero_carne")).append("\"  onclick=\"edit(this.id);\">") 
                         .append(" <a class=\"btn btn-warning\"'><i class=\"fas fa-edit\"></i>  </a>"
                                 +" <a class=\"btn btn-danger\"'> <i class=\"fas fa-trash-alt\"></i> </a>"

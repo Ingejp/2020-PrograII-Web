@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PROGRAII APP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>      
+        
+        <script>
+            $(document).ready(function(){
+                listarGenero();
+                               
+                $("#btnGuardar").click(function(){                    
+                    guardarTarjeta();
+                }) 
+                
+                function guardarTarjeta(){
+                    $.ajax({
+                        url:"NewServlet",
+                        dataType:"html",
+                        data: $("#formALumno").serialize()+"&control=INSERT",
+                        method: "POST",
+                        success:function(respuestaDelServidor){
+                            if (respuestaDelServidor=1){
+                                 $("#msjExito").show();
+                                $("#msjExito").hide(3000);
+                                 document.getElementById("formALumno").reset();
+                                 setInterval(function(){  window.location.replace("AlumnoIndex.html"); }, 4000);
+                                
+                            }else{
+                                 $("#msjError").show();
+                                $("#msjError").hide(3000);
+                            }
+                           
+                            //$("#msjExito").css("display","block");
+                        }
+                    })                    
+                }                
+               
+                function listarGenero(){
+                    $.ajax({
+                         url:"GeneroController",
+                         dataType:"html",
+                         data:"control=LISTAR",
+                         method: "POST",
+                         success:function(respuesta){
+                             $("#genero").html(respuesta);
+                         },
+                         error:function(objAjax, estado, excepcion){
+                             alert("Error al mostrar registros");
+                         }
+                    })
+                }
+                
+                
+            })
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#"><i class="fas fa-home"></i></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">PrograII APP <span class="sr-only">(current)</span></a>
+                </li>
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Catálogos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                       <a class="dropdown-item" href="AlumnoIndex.html">Alumnos</a>
+                      <a class="dropdown-item" href="#">Genero</a>
+                      <a class="dropdown-item" href="#">Cursos</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Incripciones
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="#">Registro de Inscrpciones</a>
+                      <a class="dropdown-item" href="#">Reporte de Inscripciones</a>
+                    </div>
+                </li>
+              </ul>
+              <div class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </div>
+            </div>
+        </nav>
+        
+      
+        
+        <div class="container-md" style="min-height: 900px;">       
+            <h1 class="mt-5 mb-5"> Registro de Alumnos </h1>          
+              <div class="alert alert-success" role="alert" style="display: none;" id="msjExito" >
+                Tarjeta agregada exitosamente!
+              </div>
+            <div class="alert alert-danger" role="alert" style="display: none;" id="msjError">
+               Error al ejecutar la transacción, verifique todos los campos
+              </div>
+            <form action="NewServlet" method="POST" id="formALumno" >
+                <div class="form-group">
+                  <label for="formGroupExampleInput">CODIGO ALUMNO</label>
+                  <input type="text" class="form-control" id="carne"  name="carne" placeholder="#de carné" required>
+                   <label for="formGroupExampleInput">NOMBRE</label>
+                  <input type="text" class="form-control" id="nombre"  name="nombre" placeholder="nombre alumno" required>
+                   <label for="formGroupExampleInput">APELLIDO</label>
+                  <input type="text" class="form-control" id="apellido"  name="apellido" placeholder="apellido alumno" required>
+                   <label for="formGroupExampleInput">CORREO</label>
+                  <input type="text" class="form-control" id="correo"  name="correo" placeholder="correo" required>
+                  
+                  
+                  <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                    </div>
+                      <select class="custom-select" id="genero" name="genero">
+                        
+                    </select>
+                  </div>
+                  
+                </div>
+                <button type="button" id="btnGuardar" class="btn btn-primary" > <i class="fas fa-save">  </i> Guardar con JavaScript</button>      
+                <input type="submit" value="Guardar sin JavaScript" class="btn btn-success">
+                <a href="AlumnoIndex.html" type="button" value="Cancelar" id="btnCancelar" class="btn btn-danger"> 
+                    <i class="fas fa-search"></i>
+                    Cancelar
+                    </a>                 
+             </form>           
+         
+        </div>
+        
+        <footer style="background: background;">
+            Footer
+        </footer>
+    </body>
+</html>

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author JP
  */
 @WebServlet(name = "CursosController", urlPatterns = {"/CursosController"})
-public class CursosController extends HttpServlet {
+public class ListaCursos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

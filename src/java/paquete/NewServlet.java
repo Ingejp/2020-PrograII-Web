@@ -26,30 +26,34 @@ public class NewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //String nombreDeTarjeta = request.getParameter("nombre");
-        //int numeroDeTarjeta = Integer.parseInt(request.getParameter("numero"));        
-        //TarjetaDeCredito tarjeta = new TarjetaDeCredito();    
-        //tarjeta.setNombreDeTarjeta(request.getParameter("nombre"));
-        //tarjeta.setNumeroDeTarjeta(request.getParameter("numero"));
-        
-        String carne = request.getParameter("carne");
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String correo = request.getParameter("correo");
-        String genero = request.getParameter("genero");
-        
-        StringBuffer res = new StringBuffer();
+        String control = request.getParameter("control");
+        String datoParaBuscar = request.getParameter("datoParaBuscar");
+        Alumno alumno = new Alumno();     
+          StringBuffer res = new StringBuffer();
         Writer ajaxSalida =  response.getWriter(); 
         
-        Alumno alumno = new Alumno();    
+        if(control.toUpperCase().equals("MOSTRAR")){            
+            alumno.consultarRegistros(res, datoParaBuscar); 
+        } 
+         if(control.toUpperCase().equals("INSERT")){
+            insertar(request, response, res, alumno);
+        } 
         
         try(PrintWriter out = response.getWriter()) {
-          alumno.insert(carne, nombre, apellido, correo, genero, res);
-          alumno.consultarRegistros(res);  // CONSULTAMOS
+
           ajaxSalida.write(res.toString());
           ajaxSalida.flush();
           ajaxSalida.close();
         }
+    }
+    
+    private void insertar(HttpServletRequest request, HttpServletResponse response, StringBuffer res, Alumno alumno){
+         String carne = request.getParameter("carne");
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String correo = request.getParameter("correo");
+        String genero = request.getParameter("genero");  
+        alumno.insert(carne, nombre, apellido, correo, genero, res);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
