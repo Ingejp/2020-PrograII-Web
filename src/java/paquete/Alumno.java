@@ -1,3 +1,5 @@
+package paquete;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +49,7 @@ public class Alumno {
         //tabla: alumno   
         
         //String sql="select * from alumno"; ORACLE
-        String sql="select * from universidad.alumno";
+        String sql="SELECT * FROM universidad.alumno, universidad.genero WHERE alumno.genero_idgenero=genero.idgenero";
         
         try{
         prstmt = cn.prepareStatement(sql);                        
@@ -60,9 +62,11 @@ public class Alumno {
                 respuesta.append("<td >").append(result.getString("nombre")).append("</td>");
                 respuesta.append("<td>").append(result.getString("apellido")).append("</td>");
                 respuesta.append("<td>").append(result.getString("correo")).append("</td>");
-                respuesta.append("<td id=\"").append(result.getString("numero_carne")).append("ondblclick=\"edit(this.id);\">").append("<a class=btn btn-outline-danger role=button> Eliminar</a> </td>");
-                respuesta.append("<td><button type=\"button\" id=\"btnEditar\" class=\"btn btn-warning\" > Editar </button> ");
-                respuesta.append("</tr>");
+                respuesta.append("<td>").append(result.getString("descripcion")).append("</td>");
+                respuesta.append("<td id=\"").append(result.getString("numero_carne")).append("\"  onclick=\"edit(this.id);\">") 
+                        .append(" <a class=\"btn btn-warning\"'><i class=\"fas fa-edit\"></i>  </a>"
+                                +" <a class=\"btn btn-danger\"'> <i class=\"fas fa-trash-alt\"></i> </a>"
+                                + " <td></tr>");
                 }
             }else{
                 respuesta.append("No hay registros para mostrar");

@@ -1,3 +1,5 @@
+package paquete;
+
 
 public class TarjetaDeCredito extends TarjetaBancaria {
     private double tasaDeInteres;
